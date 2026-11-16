@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f7fa;color:#333;display:flex;flex-direction:column;min-height:100vh;}
+  header{background:#2c3e50;color:#fff;padding:1.5rem;text-align:center;}
+  header h1{margin:0;font-size:2rem;}
+  main{flex:1;padding:1rem;max-width:1200px;margin:auto;width:100%;}
+  .prompt-box{display:flex;flex-direction:column;margin-bottom:1.5rem;}
+  textarea{width:100%;min-height:120px;padding:0.8rem;font-size:1rem;border:1px solid #ccc;border-radius:4px;resize:vertical;}
+  button{margin-top:0.5rem;padding:0.6rem 1.2rem;font-size:1rem;background:#27ae60;color:#fff;border:none;border-radius:4px;cursor:pointer;align-self:flex-start;}
+  button:hover{background:#219150;}
+  .results{display:flex;flex-wrap:wrap;gap:1rem;}
+  .panel{flex:1 1 45%;background:#fff;border:1px solid #ddd;border-radius:4px;padding:1rem;box-shadow:0 2px 4px rgba(0,0,0,0.05);}
+  .panel h2{margin-top:0;font-size:1.2rem;color:#2c3e50;}
+  pre{background:#f0f0f0;padding:0.8rem;border-radius:4px;overflow:auto;}
+  @media(max-width:768px){
+    .panel{flex-basis:100%;}
+  }
+  footer{background:#2c3e50;color:#fff;text-align:center;padding:0.8rem;font-size:0.9rem;}
+</style>
+<title>cloud ai code – side‑by‑side Claude &amp; Codex comparison</title>
+<meta name="description" content="ParallelPrompt runs Claude and Codex together in an IDE, showing both code suggestions side‑by‑side, letting developers compare outputs without local setup.">
+<meta property="og:title" content="cloud ai code – side‑by‑side Claude &amp; Codex comparison">
+<meta property="og:description" content="ParallelPrompt runs Claude and Codex together in an IDE, showing both code suggestions side‑by‑side, letting developers compare outputs without local setup.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cloud ai code – side‑by‑side Claude &amp; Codex comparison">
+<meta name="twitter:description" content="ParallelPrompt runs Claude and Codex together in an IDE, showing both code suggestions side‑by‑side, letting developers compare outputs without local setup.">
+<link rel="canonical" href="https://achahboune.github.io/parallelprompt/">
+<meta property="og:url" content="https://achahboune.github.io/parallelprompt/">
+</head>
+<body>
+<header>
+  <h1>ParallelPrompt</h1>
+  <p>Run Claude and Codex side‑by‑side in the cloud – instant AI code comparison for backend developers.</p>
+</header>
+<main>
+  <section class="prompt-box">
+    <textarea id="promptInput" placeholder="Enter your coding question or prompt…"></textarea>
+    <button id="runBtn">Generate</button>
+  </section>
+  <section class="results">
+    <div class="panel" id="claudePanel">
+      <h2>Claude (AI code assistant)</h2>
+      <pre id="claudeResult">—</pre>
+    </div>
+    <div class="panel" id="codexPanel">
+      <h2>Codex (AI code assistant)</h2>
+      <pre id="codexResult">—</pre>
+    </div>
+  </section>
+</main>
+<footer>
+  © 2026 ParallelPrompt – cloud ai code tools for developers
+</footer>
+<script>
+  const dummyClaude = [
+    "def fibonacci(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a",
+    "SELECT id, name FROM users WHERE created_at > NOW() - INTERVAL '7 days';",
+    "async function fetchData(url) {\n  const response = await fetch(url);\n  return response.json();\n}"
+  ];
+  const dummyCodex = [
+    "function fibonacci(n) {\n  let a = 0, b = 1;\n  for (let i = 0; i < n; i++) {\n    [a, b] = [b, a + b];\n  }\n  return a;\n}",
+    "db.users.find({createdAt: {$gt: new Date(Date.now() - 7*24*60*60*1000)}}).project({id:1, name:1});",
+    "import requests\nresponse = requests.get(url)\nprint(response.json())"
+  ];
+  function randomItem(arr){return arr[Math.floor(Math.random()*arr.length)];}
+  document.getElementById('runBtn').addEventListener('click',()=>{
+    const prompt = document.getElementById('promptInput').value.trim();
+    if(!prompt){alert('Please enter a prompt.');return;}
+    document.getElementById('claudeResult').textContent = randomItem(dummyClaude);
+    document.getElementById('codexResult').textContent = randomItem(dummyCodex);
+  });
+</script>
+</body>
+</html>
